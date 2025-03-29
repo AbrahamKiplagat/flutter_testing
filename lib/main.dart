@@ -1,41 +1,30 @@
 import 'package:flutter/material.dart';
-import 'todo_list.dart';
-import 'favorites_screen.dart';
+import 'screens/todo_list.dart';
 
+void main() => runApp(const MyApp());
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
+  static final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.light);
   const MyApp({super.key});
 
-  static ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<ThemeMode>(
-      valueListenable: MyApp.themeNotifier,
-      builder: (_, ThemeMode themeMode, __) {
+      valueListenable: themeNotifier,
+      builder: (context, themeMode, child) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.blue,
-            scaffoldBackgroundColor: Colors.white,
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            primarySwatch: Colors.blueGrey,
-            scaffoldBackgroundColor: Colors.black,
-          ),
+          debugShowCheckedModeBanner: false,  // Add this line
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
           themeMode: themeMode,
-          home: const TodoList(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const TodoList(),
+            '/todo': (context) => const TodoList(initialTab: 0),
+            '/notes': (context) => const TodoList(initialTab: 1),
+            '/calendar': (context) => const TodoList(initialTab: 2),
+            '/favorites': (context) => const TodoList(initialTab: 3),
+          },
         );
       },
     );

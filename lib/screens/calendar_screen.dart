@@ -5,11 +5,6 @@ class CalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Calendar Screen',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-      ),
-    );
+    return const Center(child: Text('Calendar Screen'));
   }
 }

@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:testing/favorites_screen.dart';
-import 'main.dart';
+import 'package:testing/widgets/bottom_nav.dart';
+import 'todo_screen.dart';
 import 'notes_screen.dart';
 import 'calendar_screen.dart';
-import 'todo_screen.dart';  // ✅ Import the missing class
+import 'favorites_screen.dart';
+import '../main.dart';
 
-enum CustomThemeMode { light, dark, vibrant } // ✅ Add custom theme enum
+enum CustomThemeMode { light, dark, vibrant }
 
 class TodoList extends StatefulWidget {
-  const TodoList({super.key});
+  final int initialTab;
+  const TodoList({super.key, this.initialTab = 0});
 
   @override
   State<TodoList> createState() => _TodoListState();
 }
 
 class _TodoListState extends State<TodoList> {
-  CustomThemeMode selectedTheme = CustomThemeMode.light; // ✅ Default theme
-
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+  CustomThemeMode selectedTheme = CustomThemeMode.light;
 
   final List<Map<String, dynamic>> themes = [
     {'name': 'Light Mode', 'mode': CustomThemeMode.light},
     {'name': 'Dark Mode', 'mode': CustomThemeMode.dark},
-    {'name': 'Vibrant Mode', 'mode': CustomThemeMode.vibrant}, // ✅ Fix mode type
+    {'name': 'Vibrant Mode', 'mode': CustomThemeMode.vibrant},
   ];
 
   final List<Widget> _screens = [
@@ -31,6 +32,12 @@ class _TodoListState extends State<TodoList> {
     const CalendarScreen(),
     const FavoritesScreen()
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialTab;
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -72,35 +79,18 @@ class _TodoListState extends State<TodoList> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [Colors.purple, Colors.blue, Colors.pinkAccent],
-                ) // ✅ Gradient for Vibrant Mode
+                )
               : null,
-          color: selectedTheme == CustomThemeMode.dark ? Colors.black : Colors.white,
+          color: selectedTheme == CustomThemeMode.dark ? Colors.black : null,
         ),
         child: _screens[_selectedIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNav(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'To-Do',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.note),
-            label: 'Notes',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-             icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-        ],
+        // Optional customization:
+        // selectedColor: Colors.red,
+        // unselectedColor: Colors.grey.shade600,
       ),
     );
   }
