@@ -30,14 +30,6 @@ class BottomNav extends StatelessWidget {
           icon: Icon(Icons.note),
           label: 'Notes',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
-          label: 'Calendar',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: 'Favorites',
-        ),
       ],
     );
   }

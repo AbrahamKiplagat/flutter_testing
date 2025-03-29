@@ -140,68 +140,113 @@ class _TodoItemState extends State<TodoItem> {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      tileColor: widget.color.withOpacity(0.2),
-      title: Column(
+@override
+Widget build(BuildContext context) {
+  return Card(
+    elevation: 2,
+    margin: EdgeInsets.zero,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.title,
-            style: TextStyle(
-              fontWeight: widget.isPriority ? FontWeight.bold : FontWeight.normal,
-              decoration: widget.isPriority ? TextDecoration.underline : null,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: widget.isPriority 
+                        ? FontWeight.bold 
+                        : FontWeight.w600,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+              _buildStatusIndicator(),
+            ],
           ),
           if (widget.description.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.only(top: 8),
               child: Text(
                 widget.description,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Row(
-              children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  color: widget.status.color,
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Icon(
+                Icons.calendar_today,
+                size: 16,
+                color: Colors.grey[600],
+              ),
+              const SizedBox(width: 8),
+              Text(
+                DateFormat('MMM dd, yyyy').format(widget.startDate),
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  DateFormat('MMM dd, yyyy').format(widget.startDate),
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
-            ),
+              ),
+              const Spacer(),
+              if (widget.isPriority) _buildPriorityBadge(),
+            ],
           ),
         ],
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: _showEditDialog,
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: widget.onDismiss,
-          ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _titleController.dispose();
-    _descController.dispose();
-    super.dispose();
-  }
+    ),
+  );
 }
+
+Widget _buildStatusIndicator() {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    decoration: BoxDecoration(
+      color: widget.status.color.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Text(
+      widget.status.text,
+      style: TextStyle(
+        color: widget.status.color,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  );
+}
+
+Widget _buildPriorityBadge() {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    decoration: BoxDecoration(
+      color: Colors.red.withOpacity(0.1),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Row(
+      children: [
+        Icon(
+          Icons.warning_amber_rounded,
+          color: Colors.red[300],
+          size: 16,
+        ),
+        const SizedBox(width: 4),
+        Text(
+          'High Priority',
+          style: TextStyle(
+            color: Colors.red[300],
+            fontSize: 12,
+          ),
+        ),
+      ],
+    ),
+  );
+}}

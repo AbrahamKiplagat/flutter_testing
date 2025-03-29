@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'screens/todoThemeState/todo_list.dart';
+import 'package:testing/themes/settings_screen.dart';       // Add this import
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   static final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.light);
+  static final customThemeNotifier = ValueNotifier<CustomThemeMode>(CustomThemeMode.light);
   const MyApp({super.key});
 
   @override
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
       valueListenable: themeNotifier,
       builder: (context, themeMode, child) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,  // Add this line
+          debugShowCheckedModeBanner: false,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
           themeMode: themeMode,
@@ -22,8 +24,7 @@ class MyApp extends StatelessWidget {
             '/': (context) => const TodoList(),
             '/todo': (context) => const TodoList(initialTab: 0),
             '/notes': (context) => const TodoList(initialTab: 1),
-            '/calendar': (context) => const TodoList(initialTab: 2),
-            '/favorites': (context) => const TodoList(initialTab: 3),
+            '/settings': (context) => const SettingsScreen(),  // Add settings route
           },
         );
       },
