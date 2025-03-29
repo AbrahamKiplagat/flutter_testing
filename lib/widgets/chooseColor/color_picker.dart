@@ -39,9 +39,9 @@ class ColorPickerGrid extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 6,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
+          crossAxisCount: 15,
+          mainAxisSpacing: 2,
+          crossAxisSpacing: 2,
           childAspectRatio: 1,
         ),
         itemCount: colors.length,
