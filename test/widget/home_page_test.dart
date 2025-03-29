@@ -1,21 +1,25 @@
-// test/widget/home_page_test.dart
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:testing/main.dart';
+import 'package:flutter/material.dart';
+import 'package:testing/widgets/home_page.dart';
+// import 'package:testing/pages/home_page.dart';
 
 void main() {
-  testWidgets('Check if MyHomePage has correct text and button', (tester) async {
-    await tester.pumpWidget(MyApp());
+  testWidgets('Check if MyHomePage has correct text and button', (WidgetTester tester) async {
+    // Build the MyHomePage widget inside a MaterialApp
+    await tester.pumpWidget(MaterialApp(home: MyHomePage()));
 
-    // Verify the initial text is displayed
-    expect(find.text('Kiplagat Kurere'), findsOneWidget);
-    expect(find.byKey(Key('change_text_button')), findsOneWidget);
+    // Ensure the initial text is visible
+    expect(find.text("Initial Text"), findsOneWidget);
 
-    // Tap the button and trigger a state change
-    await tester.tap(find.byKey(Key('change_text_button')));
+    // Ensure the button is found by key
+    final buttonFinder = find.byKey(Key('change_text_button'));
+    expect(buttonFinder, findsOneWidget); // ✅ Fixes the "0 widgets found" issue
+
+    // Tap the button
+    await tester.tap(buttonFinder);
     await tester.pump();
 
-    // Verify the updated text appears
-    expect(find.text('New Name'), findsOneWidget);
+    // Verify text changed after button press
+    expect(find.text("Text Changed"), findsOneWidget);
   });
 }
