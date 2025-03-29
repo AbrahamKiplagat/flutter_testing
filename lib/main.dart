@@ -1,18 +1,43 @@
 import 'package:flutter/material.dart';
-import 'screens/todo_list_screen.dart';
+import 'todo_list.dart';
+import 'favorites_screen.dart';
+
 
 void main() {
-  runApp(const TodoApp());
+  runApp(const MyApp());
 }
 
-class TodoApp extends StatelessWidget {
-  const TodoApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  static ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: TodoListScreen(),
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: MyApp.themeNotifier,
+      builder: (_, ThemeMode themeMode, __) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primarySwatch: Colors.blue,
+            scaffoldBackgroundColor: Colors.white,
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            primarySwatch: Colors.blueGrey,
+            scaffoldBackgroundColor: Colors.black,
+          ),
+          themeMode: themeMode,
+          home: const TodoList(),
+        );
+      },
     );
   }
 }
