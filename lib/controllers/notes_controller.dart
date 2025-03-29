@@ -39,19 +39,6 @@ class NotesController extends ValueNotifier<List<Note>> {
 
 
 
-  List<Note> searchNotes(String query) {
-    return value.where((note) =>
-      note.title.toLowerCase().contains(query.toLowerCase()) ||
-      note.content.toLowerCase().contains(query.toLowerCase())
-    ).toList();
-
-
-
-
-
-    
-  }
-
 
 
 

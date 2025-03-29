@@ -46,6 +46,11 @@ class Note {
     bool? isPinned,
   })
   
+
+
+
+
+  
    {
     return Note(
       id: id ?? this.id,

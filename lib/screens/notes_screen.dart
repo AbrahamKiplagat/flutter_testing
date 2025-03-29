@@ -10,23 +10,18 @@ class NotesScreen extends StatefulWidget {
   State<NotesScreen> createState() => _NotesScreenState();
 }
 
+
+
+
+
+
 class _NotesScreenState extends State<NotesScreen> {
   final NotesController _notesController = NotesController();
-  final TextEditingController _searchController = TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notes'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: _showSearchDialog,
-          ),
-        ],
-      ),
-      body: ValueListenableBuilder<List<Note>>(
+           body: ValueListenableBuilder<List<Note>>(
         valueListenable: _notesController,
         builder: (context, notes, _) {
           return GridView.builder(
@@ -99,12 +94,12 @@ class _NotesScreenState extends State<NotesScreen> {
       activeIcon: Icons.close,
       children: [
         SpeedDialChild(
-          label: 'New Text Note',
+          label: 'New Notes:',
           child: const Icon(Icons.text_fields),
           onTap: _createNewNote,
         ),
         SpeedDialChild(
-          label: 'New Checklist',
+          label: 'New Checklists:',
           child: const Icon(Icons.checklist),
           onTap: _createChecklist,
         ),
@@ -115,8 +110,8 @@ class _NotesScreenState extends State<NotesScreen> {
   void _createNewNote() {
     final newNote = Note(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: 'New Note',
-      content: 'Start writing...',
+      title: 'Your Note',
+      content: 'Start writing Note...',
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -127,8 +122,8 @@ class _NotesScreenState extends State<NotesScreen> {
   void _createChecklist() {
     final newChecklist = Note(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: 'New Checklist',
-      content: '- [ ] Item 1\n- [ ] Item 2',
+      title: 'Your Checklist',
+      content: '- [ ] Enter notes here\n- [ ] Enter notes here\n',
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
@@ -148,7 +143,7 @@ class _NotesScreenState extends State<NotesScreen> {
               controller: TextEditingController(text: note.content),
               maxLines: null,
               decoration: const InputDecoration(
-                hintText: 'Start typing...',
+                hintText: 'Start Typing Notes...',
                 border: InputBorder.none,
               ),
             ),
@@ -158,53 +153,7 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
-  void _showSearchDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Search Notes'),
-        content: TextField(
-          controller: _searchController,
-          decoration: const InputDecoration(hintText: 'Search...'),
-        ),
-        actions: [
-
-
-
-
-
-
-
-          
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-
-
-
-
-
-
-          TextButton(
-            onPressed: () {
-              final results = _notesController.searchNotes(_searchController.text);
-              // Implement search results display
-              Navigator.pop(context);
-            },
-            child: const Text('Search'),
-          ),
-
-
-
-
-
-
-
-        ],
-      ),
-    );
-  }
+ 
 
   void _showNoteOptions(Note note) {
     showModalBottomSheet(
