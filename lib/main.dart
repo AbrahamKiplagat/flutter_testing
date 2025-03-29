@@ -1,3 +1,4 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 
 void main() {
@@ -8,38 +9,40 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ButtonWidget(),
+      home: MyHomePage(),
     );
   }
 }
 
-class ButtonWidget extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _ButtonWidgetState createState() => _ButtonWidgetState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _ButtonWidgetState extends State<ButtonWidget> {
-  String buttonText = "Press me";
+class _MyHomePageState extends State<MyHomePage> {
+  String name = "Kiplagat Kurere";
 
-  void updateText() {
+  void changeName() {
     setState(() {
-      buttonText = "Button Clicked!";
+      name = "New Name";
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Flutter Test Example")),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(buttonText, key: Key('buttonText')),
+            Text(name, key: Key("name_text")),
+            SizedBox(height: 20),
             ElevatedButton(
-              key: Key('clickButton'),
-              onPressed: updateText,
-              child: Text('Click Me'),
-            ),
+              key: Key("change_text_button"),
+              onPressed: changeName,
+              child: Text("Change Name"),
+            )
           ],
         ),
       ),
