@@ -1,9 +1,7 @@
-// todo_item.dart
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:testing/models/todoModels/todo_status.dart';
 import 'package:testing/widgets/chooseColor/color_picker.dart';
-// import '../models/todo_status.dart';
 
 class TodoItem extends StatefulWidget {
   final String title;
@@ -143,57 +141,62 @@ class _TodoItemState extends State<TodoItem> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      tileColor: widget.color.withOpacity(0.2),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.title,
-            style: TextStyle(
-              fontWeight: widget.isPriority ? FontWeight.bold : FontWeight.normal,
-              decoration: widget.isPriority ? TextDecoration.underline : null,
-            ),
-          ),
-          if (widget.description.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                widget.description,
-                style: Theme.of(context).textTheme.bodySmall,
+    return Card(
+      color: _currentColor.withOpacity(0.3), // Use the selected color with opacity
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.title,
+              style: TextStyle(
+                fontWeight: widget.isPriority ? FontWeight.bold : FontWeight.normal,
+                decoration: widget.isPriority ? TextDecoration.underline : null,
               ),
             ),
-          Padding(
-            padding: const EdgeInsets.only(top: 4),
-            child: Row(
-              children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  color: widget.status.color,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  DateFormat('MMM dd, yyyy').format(widget.startDate),
+            if (widget.description.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  widget.description,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
-              ],
+              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Row(
+                children: [
+                  Container(
+                    width: 10,
+                    height: 10,
+                    color: widget.status.color,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    DateFormat('MMM dd, yyyy').format(widget.startDate),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: _showEditDialog,
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: widget.onDismiss,
-          ),
-        ],
+          ],
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: _showEditDialog,
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: widget.onDismiss,
+            ),
+          ],
+        ),
       ),
     );
   }

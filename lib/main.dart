@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'screens/todoThemeState/todo_list.dart';
-import 'package:testing/themes/settings_screen.dart';       // Add this import
+import 'package:testing/screens/todoThemeState/todo_list.dart';
+import 'package:testing/themes/settings_screen.dart';
+import 'package:testing/themes/custom_theme.dart';
 
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  static final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.light);
-  static final customThemeNotifier = ValueNotifier<CustomThemeMode>(CustomThemeMode.light);
+  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
+  static final ValueNotifier<CustomThemeMode> customThemeNotifier = ValueNotifier(CustomThemeMode.light);
+  
   const MyApp({super.key});
 
   @override
@@ -16,15 +18,26 @@ class MyApp extends StatelessWidget {
       builder: (context, themeMode, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.blue,
+              secondary: Colors.lightBlue,
+            ),
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.dark(
+              primary: Colors.lightBlueAccent,
+              secondary: Colors.blueAccent,
+            ),
+            scaffoldBackgroundColor: Colors.grey[900],
+          ),
           themeMode: themeMode,
           initialRoute: '/',
           routes: {
             '/': (context) => const TodoList(),
             '/todo': (context) => const TodoList(initialTab: 0),
             '/notes': (context) => const TodoList(initialTab: 1),
-            '/settings': (context) => const SettingsScreen(),  // Add settings route
+            '/settings': (context) => const SettingsScreen(),
           },
         );
       },
