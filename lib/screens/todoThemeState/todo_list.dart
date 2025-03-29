@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:testing/widgets/bottom_nav.dart';
-import 'todo_screen.dart';
-import 'notes_screen.dart';
-import 'calendar_screen.dart';
-import 'favorites_screen.dart';
-import '../main.dart';
+import '../todoPriority/todo_screen.dart';
+import '../notes/notes_screen.dart';
+import '../calender/calendar_screen.dart';
+import '../Favorites/favorites_screen.dart';
+import '../../main.dart';
 
 enum CustomThemeMode { light, dark, vibrant }
 
