@@ -1,11 +1,11 @@
 # Todo App
 
-A Todo application to manage tasks efficiently.
+A Todo application to manage tasks and notes efficiently.
 
 ## Features
 
-- Add, edit, update and delete tasks
-- Add, edit, Update and delete Notes
+- Add, edit, update, and delete tasks
+- Add, edit, update, and delete notes
 - Mark tasks as completed
 - Categorize tasks
 - Set due dates
@@ -21,7 +21,6 @@ cd todo-app
 npm install
 flutter pub get
 
-
 # Start the application
 npm start
 flutter run
@@ -31,8 +30,9 @@ flutter run
 
 1. Open the application.
 2. Create a new task by providing a title and optional details.
-3. Mark tasks as completed when done.
-4. Delete tasks that are no longer needed.
+3. Add notes related to tasks.
+4. Mark tasks as completed when done.
+5. Delete tasks or notes that are no longer needed.
 
 ## Entity Relationship Diagram (ERD)
 
@@ -42,13 +42,15 @@ graph TD;
     Task -->|belongs to| Category;
     User -->|manages| Category;
     Task -->|has| DueDate;
+    Task -->|contains| Note;
+    Note -->|belongs to| Task;
 ```
 
 ## Technologies Used
 
-- Frontend: Flutter responsive design 
-- Backend: Flutter (Dinamic Advanced Robotic Technologies)
-- Database: MongoDB / Postgress
+- **Frontend:** Flutter responsive design
+- **Backend:** Flutter (Dynamic Advanced Robotic Technologies)
+- **Database:** MongoDB / PostgreSQL
 
 ## Contributing
 
